@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+    <section class="hero" id="hero">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-12">
+                            <div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="{% static 'images/slider/portrait-successful-mid-adult-doctor-with-crossed-arms1.jpg' %}" class="img-fluid" alt="">
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="heroText d-flex flex-column justify-content-center">
+
+                                <h1 class="mt-auto mb-2">
+                                    Elevate your
+                                    <div class="animated-info">
+                                        <span class="animated-item">business</span>
+                                        <span class="animated-item">ideas</span>
+                                        <span class="animated-item">yourself</span>
+                                    </div>
+                                </h1>
+
+                                <p class="mb-4 text-justify">Haxe Financial Services(HFS) has been expanded to Kenya to facilitate funding and financial assistance for small businesses, private non-profits, entrepreneurs and Individuals.</p>
+
+
+                                {% if request.user.is_authenticated %}
+                                <div class="heroLinks d-flex flex-wrap align-items-center">
+
+                                    <a class="custom-link me-4" href="{% url 'loanapplication:business' %}" data-hover="Business Loan">Business Loan</a>
+
+                                    <a class="custom-link2 me-4" href="{% url 'loanapplication:individual' %}" style = "margin-left: 20px" data-hover="Individual Loan">Individual Loan</a>
+                                </div>
+                                {% else %}
+                                <div class="heroLinks d-flex flex-wrap align-items-center">
+
+                                    <a class="custom-link me-4" href="{% url 'bsignup' %}" data-hover="Business Loan">Business Loan</a>
+
+                                    <a class="custom-link2 me-4" href="{% url 'isignup' %}" style = "margin-left: 20px" data-hover="Individual Loan">Individual Loan</a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class = "feedback text-center">
+              <h2 style="color: #FF7700; text-transform: uppercase">
+                Top ten Loan listings
+              </h2>
+            </section>
+{% for loan in top_listing %}
+  <section class="ftc-section">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-wrap" style="overflow-x:auto;">
+						<table class="table" >
+              <thead class="thead-secondary">
+						    <tr>
+						      <th style="color: #000; font-size: 15px">CODE: {{loan.code}} | {{loan.name}}</th>
+						    </tr>
+						  </thead>
+						  <thead class="thead-primary">
+						    <tr>
+						      <th>Category: {{loan.category}}</th>
+						      <th>Open Date: {{loan.start_date}}</th>
+						      <th>Close Date: {{loan.end_date}}</th>
+                  {% if loan.active == True %}
+						      <th>Status: <span style = "color: white;background:green; padding: 5px 10px 5px 10px;border-radius: 1px">open</span></th>
+                  {% else %}
+                  <th>Status: <span style = "color: white;background:red; padding: 5px 10px 5px 10px;border-radius: 1px">closed</span></th>
+                  {% endif %}
+						    </tr>
+						  </thead>
+              </table>
+              {% if request.user.is_authenticated %}
+              <div class="table-text">
+                <p>{{loan.description}}</p>
+                {% if loan.category.name == 'Individual' %}
+              <a href="{% url 'loanapplication:individual' %}"><button type="button" name="button" class = "btn btn-success">Apply for this loan<i class="fa fa-arrow-right" aria-hidden="true" style="margin-left: 10px"></i></button></a>
+              {% elif loan.category.name == 'Business' %}
+              <a href="{% url 'loanapplication:business' %}"><button type="button" name="button" class = "btn btn-success">Apply for this loan<i class="fa fa-arrow-right" aria-hidden="true" style="margin-left: 10px"></i></button></a>
+              {% endif %}
+              </div>
+              {% else %}
+              <div class="table-text">
+                <p class = "text-justify">{{loan.description}}</p>
+                {% if loan.category.name == 'Individual' %}
+              <a href="{% url 'isignup' %}"><button type="button" name="button" class = "btn btn-success">Apply for this loan<i class="fa fa-arrow-right" aria-hidden="true" style="margin-left: 10px"></i></button></a>
+              {% elif loan.category.name == 'Business' %}
+              <a href="{% url 'bsignup' %}"><button type="button" name="button" class = "btn btn-success">Apply for this loan<i class="fa fa-arrow-right" aria-hidden="true" style="margin-left: 10px"></i></button></a>
+              {% endif %}
+              </div>
+              {% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endfor %}
+
+  <section class = "gravestone">
+    <div class="container-fluid" style="padding-bottom: 15px; padding-top: 15px">
+    <p>All loans will be serviced by HFS. See State Disclosures for additional information.</p><br>
+    <ol>
+<li>Loan approval is subject to meeting the credit criteria, which may include providing acceptable documentation. Actual loan amount, term, and Annual Percentage Rate of the loan that a consumer qualifies for may vary by consumer. Loan proceeds are intended primarily for personal, family and household purposes and small businesses. Minimum loan amounts vary by state, type of loan and purpose. Consumers need to demonstrate ability to repay the loan for refundable loans.</li>
+<li>Based on consumers who received a loan from HFS from February 2019 to May 2021.</li>
+<li>Application processes could take five (5) minutes to complete. Upon completion, a conditional approval may be given pending review of documentation. Funding time is based on the time from final approval following receipt and review of all required documents and signing, prior to 2PM on a business day.</li>
+<li>To exercise the right to rescind, the consumer(s) must notify the HFS in writing by midnight on the third calendar day from obtaining the loan. Within one business day from notice of rescission, the consumer(s) must return any monies received and fees paid on behalf of the consumer(s) by certified funds.</li>
+<li>Lenders recommend and encourage consumers to pay early and often and more in order to avoid additional finance charges.</li>
+<p>If you are using a screen reader and are having problems using this website, please call us for assistance.</p>
+</ol>
+  </div>
+  </section>
+
+  <section class = "feedback text-center">
+    <h2 style="color: #FF7700; text-transform: uppercase">
+      Feedback section
+    </h2>
+  </section>
+
+  <div class="container mt-5">
+    <div class="d-flex justify-content-center row" style="padding-bottom: 40px">
+        <div class="col-md-12">
+            <div class="d-flex flex-column comment-section">
+                <div class="bg-white p-2">
+                    <div class="d-flex flex-row user-info">
+                        <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name" style="color:#0275d8">Marry Andrews</span><span class="date text-black-50">Shared publicly - Jan 2020</span></div>
+                    </div>
+                    <div class="mt-2">
+                        <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    </div>
+                </div>
+                <!-- <div class="bg-white">
+                    <div class="d-flex flex-row fs-12">
+                        <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1">Like</span></div>
+                        <div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span class="ml-1">Comment</span></div>
+                        <div class="like p-2 cursor"><i class="fa fa-share"></i><span class="ml-1">Share</span></div>
+                    </div>
+                </div> -->
+                <div class="bg-light p-2">
+                    <textarea class="form-control ml-1 shadow-none textarea"></textarea></div>
+                    <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none" type="button" style="background:#0275d8; border:#0275d8;">Post comment</button><button class="btn btn-outline-primary btn-sm ml-1 shadow-none" style="color:#0275d8; border:#0275d8;"  type="button">Cancel</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

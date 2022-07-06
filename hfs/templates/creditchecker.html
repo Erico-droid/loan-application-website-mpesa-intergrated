@@ -1,0 +1,48 @@
+{% block raw %}
+{% load static %}
+{% load compress %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+    {% compress css %}
+    <link rel="stylesheet" type="text/x-scss" href="{% static 'css/main.scss' %}" />
+    {% endcompress %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+  <div class="bookshelf_wrapper">
+<ul class="books_list">
+  <li class="book_item first"></li>
+  <li class="book_item second"></li>
+  <li class="book_item third"></li>
+  <li class="book_item fourth"></li>
+  <li class="book_item fifth"></li>
+  <li class="book_item sixth"></li>
+</ul>
+<div class="shelf"></div>
+</div>
+<div class="sub_div">
+    <h2 style="font-size: 30px;">Hold on while our system checks your credit records <span>...</span> </h2>
+</div>
+
+<div id="snackbar">Redirecting ...</div>
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script type="text/javascript">
+setTimeout(function(){
+  window.location.href = "{% url 'loanapplication:lipa_na_mpesa' %}";
+}, 15000);
+
+setTimeout(function(){
+var x = document.getElementById("snackbar");
+x.className = "show";
+setTimeout(function(){ x.className = x.className.replace("show", ""); },
+3000);}, 11000);
+</script>
+</body>
+</html>
+{% endblock %}

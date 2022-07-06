@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<head>
+  <link rel="stylesheet" href="{% static 'css/business-css.css' %}">
+</head>
+    <style media="screen">
+    </style>
+	<!-- <section class="ftco-section">
+		<div class="container-fluid">
+			<div class="row justify-content-left">
+				<div class="col-md-12 mb-3">
+					<h6 class="heading-section">Loans And Financial Assistance</h6>
+          <h6 class="heading-section">Funding and financial assistance for small businesses, private non-profits, entrepreneurs and Individuals</h6>
+				</div>
+			</div>
+		</div>
+    </section> -->
+
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 text-center p-0 mt-6 mb-6">
+                <div class="card px-0 pt-4 pb-0 mt-6 mb-8">
+                    <h2 id="heading">business loan application</h2>
+                    <h5 id="heading" style = "margin-top: 15px;padding:0px 40px 0px 40px" class = "text-left">STREAMLINED PROCESS REQUIREMENTS</h5>
+                    <p style = "padding:0px 40px 0px 40px" class = "text-justify">HFS is collecting the requested information in order to make a loan under HFS' Development and Empowerment Loan Program to the qualified entities listed in this application. The information will be used in determining whether the applicant is eligible for a loan. If you do not submit all the information requested, your loan cannot be fully processed. The applicant understands that the HSF is relying upon the self-certifications contained in this application to verify that the Applicant is an eligible entity, and that the applicant is providing this self-certification under penalty of perjury pursuant to 28 U.S.C. 1746 for verification purposes.</p>
+
+                    <form id="msform" method="post" action="{% url 'LoanApplication:business' %}">
+                      {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+                      {% csrf_token %}
+                        <!-- progressbar -->
+                        {% comment %} <ul id="progressbar">
+                            <li class="active" id="account"><strong>Disclosures</strong></li>
+                            <li id="personal"><strong>Business Information</strong></li>
+                            <li id="payment"><strong>Owner Information</strong></li>
+                            <li id="confirm"><strong>Application</strong></li>
+                        </ul>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div> <br> <!-- fieldsets --> {% endcomment %}
+                        <fieldset>
+                          <h2 id="heading" style = "margin-top: 30px;" class = "">Disclosures</h2>
+                            <div class="form-card">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h6 id="heading" style = "margin-top: 25px;" class = "text-left">LOAN PROGRAM CODE:</h6>
+                                    </div>
+                                    <div class="col-5">
+                                        <h2 class="steps">Step 1 - 4</h2>
+                                    </div>
+                                </div> <label class="fieldlabels">Select the most appropriate: * </label>
+                                {{form.loanType}}
+                                  <h5 id="heading" style = "margin-top: 15px;" class = "text-left">Review and check all of the following:</h5>
+                                  {{form.businessDesc}}
+                                  <hr>
+                                  <h5 id="heading" style = "margin-top: 15px;" class = "text-left">Review and check all of the following:</h5>
+                                  <p style = "" class = "text-justify">Applicant must review and check all the following (If Applicant is unable to check all of the following, applicant is not an Eligible Entity.</p>
+                                  <br>
+                                  {{form.loanReq}}
+                                  <p style = "" class = "text-justify">If you have questions about this application or problems providing the required information, please contact our Customer Service Center at <span style="color: blue"><u>customerservice@haxefinancialservices.com</u></span> </p>
+                                  <hr>
+                                  <!-- <p style = "" class = "text-justify">If you have questions about this application or problems providing the required information, please contact our Customer Service Center at <span style="color: blue"><u>customerservice@haxefinancialservices.com</u></span> </p> -->
+
+                            <!-- </div> <input type="button" name="next" class="next action-button" value="Next" /> -->
+
+                            <div class="form-card">
+                              <h3 id="heading" style = "margin-top: 15px;" class = "text-center">Business Information</h3>
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h6 id="heading" style = "margin-top: 25px;" class = "text-left">Fill all fields in this section:</h6>
+                                    </div>
+                                    <div class="col-5">
+                                        <h2 class="steps">Step 2 - 4</h2>
+                                    </div>
+                                </div> <label class="fieldlabels">Business Name: *</label> {{form.Names}}
+                                <label class="fieldlabels">Business Number: *</label> {{form.BusinessNumber}}
+                                <label class="fieldlabels">Is the Applicant a Non-Profit Organization?: *</label>{{form.NonProfit}}
+                              <label class="fieldlabels">Is the Applicant a Franchise?: *</label>{{form.Franchise}}
+                                <br> <label class="fieldlabels">Organization structure: *</label> {{form.organization}}
+                                  <br> <label class="fieldlabels">Activity undertaken: *</label> {{form.activity}}
+                                  <label class="fieldlabels">Detailed activity undertaken: *</label> {{form.detActivity}}
+                                  <label class="fieldlabels">Number of branches: *</label> {{form.branches}}
+                                  <label class="fieldlabels">Number of employees: *</label> {{form.employees}}
+                                  <label class="fieldlabels">Primary source of income: *</label> {{form.PrimarySOI}}
+                                  <label class="fieldlabels">Gross monthly income: *</label> {{form.GrossIncome}}
+                                  <label class="fieldlabels">Additional monthly income amount and source if any: *</label> {{form.AdditionalSOI}}
+                                  <label class="fieldlabels">Monthly expenditure: *</label> {{form.MonthExp}}
+                                  <label class="fieldlabels">Start date: *</label> {{form.StartDate}}
+                                  <label class="fieldlabels">Business phone: *</label> {{form.BusinessPhone}}
+                                  <label class="fieldlabels">Alternative phone: *</label> {{form.AlternativePhone}}
+                                  <label class="fieldlabels">Business E-mail: *</label> {{form.BusinessEmail}}
+                                  <label class="fieldlabels">Business Website Address: *</label> {{form.BusinessWeb}}
+                                  <label class="fieldlabels">Business physical address: *</label> {{form.BusinessAddress}}
+                            </div>
+                             <!-- <input type="button" name="next" class="next action-button" value="Next" /> <input type="button" name="previous" class="previous action-button-previous" value="Previous" /> -->
+
+
+                             <hr>
+                            <div class="form-card">
+                              <h3 id="heading" style = "margin-top: 15px;" class = "text-center">Owner Information</h3>
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h6 id="heading" style = "margin-top: 25px;" class = "text-left">Fill all fields in this section:</h6>
+                                    </div>
+                                    <div class="col-5">
+                                        <h2 class="steps">Step 3 - 4</h2>
+                                    </div>
+                                </div>
+                                <label class="fieldlabels">Full Name: *</label> {{form.OwnerName}}
+                                <label class="fieldlabels">Percantage of ownership (%): *</label> {{form.PercOfOwn}}
+                                <label class="fieldlabels">Phone Number: *</label> {{form.Phone}}
+                                <label class="fieldlabels">Email: *</label> {{form.email}}
+                            </div>
+                            <!-- <input type="button" name="next" class="next action-button" value="Next" /> <input type="button" name="previous" class="previous action-button-previous" value="Previous" /> -->
+
+                            <hr>
+                            <div class="form-card">
+                              <h3 id="heading" style = "margin-top: 15px;" class = "text-center">Application</h3>
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h6 id="heading" style = "margin-top: 25px;" class = "text-left">Fill all fields in this section:</h6>
+                                    </div>
+                                    <div class="col-5">
+                                        <h2 class="steps">Step 4 - 4</h2>
+                                    </div>
+                                </div>
+                                <p style = "" class = "text-justify">In the past year, has the business or a listed owner been convicted of a felony committed during and in connection with a riot or civil disorder or other declared disaster, or ever been engaged in the production or distribution of any product or service that has been determined to be obscene by a court of competent jurisdiction?</p>
+                                <input type="radio" style = "width: 30px" name="crimecheck" value="yes"><label for="">yes</label>
+                                <input type="radio" style = "width: 30px" name="crimecheck" value="no"><label for="">no</label><br>
+                                <hr>
+                                <p style = "" class = "text-justify">Is the applicant or any listed owner currently suspended or debarred from contracting with the government or receiving grants or loans?</p>
+                                <input type="radio" style = "width: 30px" name="contractcheck" value="yes"><label for="">yes</label>
+                                <input type="radio" style = "width: 30px" name="contractcheck" value="no"><label for="">no</label><br>
+                                <hr>
+                                <p style = "" class = "text-justify">Are you presently subject to an indictment, criminal information, arraignment, or other means by which formal criminal charges are brought in any jurisdiction?</p>
+                                <input type="radio" style = "width: 30px" name="courtcheck" value="yes"><label for="">yes</label>
+                                <input type="radio" style = "width: 30px" name="courtcheck" value="no"><label for="">no</label><br>
+                                <hr>
+                                <p style = "" class = "text-justify">Within the last 5 years, for any felony, have you ever been convicted, plead guilty, plead nolo contendere, been placed on pretrial diversion, or been placed on any form of parole or probation (including probation before judgment)?</p>
+                                <input type="radio" style = "width: 30px" name="convictcheck" value="yes"><label for="">yes</label>
+                                <input type="radio" style = "width: 30px" name="convictcheck" value="no"><label for="">no</label><br>
+                                <hr>
+                                <label class="fieldlabels">Amount you are applying for: *</label> {{form.Amount}}
+                                <label class="fieldlabels">Purpose of funding: *</label> {{form.Purpose}}
+                                <label class="fieldlabels">Additional information: *</label> {{form.information}}
+                                <label class="fieldlabels">Payment plan: *</label> {{form.paymentplan}}
+                                <label class="fieldlabels">Desired bank(For disbursement): *</label> {{form.desBank}}
+                                <label class="fieldlabels">Account number: *</label> {{form.accNumber}}
+                                 <br><br>
+                                <div class="row justify-content-center">
+                                </div>
+                            </div>
+                            <input type="checkbox" id="q1" name="q1" style="width:30px" value="I agree to the term and conditions"><label for="vehicle1">I agree to the term and conditions</label><br>
+                            <input type="submit" style="width:100%" class="action-button"  value="Submit" />
+                            <p style = "" class = "text-justify">If you have questions about this application or problems providing the required information, please contact our Customer Service Center at <span style="color: blue"><u>customerservice@haxefinancialservices.com</u></span> </p>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+  <section class = "gravestone">
+    <div class="container-fluid" style="padding-bottom: 15px; padding-top: 15px">
+    <p>All loans will be serviced by HFS. See State Disclosures for additional information.</p><br>
+    <ol>
+<li>Loan approval is subject to meeting the credit criteria, which may include providing acceptable documentation. Actual loan amount, term, and Annual Percentage Rate of the loan that a consumer qualifies for may vary by consumer. Loan proceeds are intended primarily for personal, family and household purposes and small businesses. Minimum loan amounts vary by state, type of loan and purpose. Consumers need to demonstrate ability to repay the loan for refundable loans.</li>
+<li>Based on consumers who received a loan from HFS from February 2019 to May 2021.</li>
+<li>Application processes could take five (5) minutes to complete. Upon completion, a conditional approval may be given pending review of documentation. Funding time is based on the time from final approval following receipt and review of all required documents and signing, prior to 2PM on a business day.</li>
+<li>To exercise the right to rescind, the consumer(s) must notify the HFS in writing by midnight on the third calendar day from obtaining the loan. Within one business day from notice of rescission, the consumer(s) must return any monies received and fees paid on behalf of the consumer(s) by certified funds.</li>
+<li>Lenders recommend and encourage consumers to pay early and often and more in order to avoid additional finance charges.</li>
+<li>If you are using a screen reader and are having problems using this website, please call us for assistance.</li>
+</ol>
+  </div>
+  </section>
+
+  <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static 'js/business-js.js' %}"></script>
+
+
+{% endblock %}

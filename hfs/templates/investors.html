@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<head>
+  <link rel="stylesheet" href="{% static 'css/business-css.css' %}">
+</head>
+    <style media="screen">
+    </style>
+
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 text-center p-0 mt-6 mb-6">
+                <div class="card px-0 pt-4 pb-0 mt-6 mb-8">
+                    <h2 id="heading">become an investor</h2>
+                    <form id="msform" method="post" action="{% url 'investors' %}">
+                      {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+                      {% csrf_token %}
+                        <!-- progressbar -->
+                        {% comment %} <ul id="progressbar">
+                            <li class="active" id="account"><strong>Disclosures</strong></li>
+                            <li id="personal"><strong>Business Information</strong></li>
+                            <li id="payment"><strong>Owner Information</strong></li>
+                            <li id="confirm"><strong>Application</strong></li>
+                        </ul>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div> <br> <!-- fieldsets --> {% endcomment %}
+                        <fieldset>
+                          <!-- <h2 id="heading" style = "margin-top: 30px;" class = "">Disclosures</h2> -->
+                            <div class="form-card">
+
+
+                            <div class="form-card">
+                              <h3 id="heading" style = "margin-top: 15px;" class = "text-center">Investor Information</h3>
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h6 id="heading" style = "margin-top: 25px;" class = "text-left">Fill all fields in this section:</h6>
+                                    </div>
+                                </div> <label class="fieldlabels">Full Name: *</label> {{form.name}}
+                                <label class="fieldlabels">Phone Number: *</label> {{form.phone}}
+                                  <label class="fieldlabels">Work E-mail: *</label> {{form.email}}
+                                  <label class="fieldlabels">Register as: *</label> {{form.investment}}
+                            <input type="checkbox" id="q1" name="q1" style="width:30px" value="I agree to the term and conditions"><label for="vehicle1">I agree to the term and conditions</label><br>
+                            <input type="submit" style="width:100%" class="action-button"  value="Submit" />
+                            <p style = "" class = "text-justify">If you have questions about this application or problems providing the required information, please contact our Customer Service Center at <span style="color: blue"><u>customerservice@haxefinancialservices.com</u></span> </p>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+  <section class = "gravestone">
+    <div class="container-fluid" style="padding-bottom: 15px; padding-top: 15px">
+    <p>All loans will be serviced by HFS. See State Disclosures for additional information.</p><br>
+    <ol>
+<li>Loan approval is subject to meeting the credit criteria, which may include providing acceptable documentation. Actual loan amount, term, and Annual Percentage Rate of the loan that a consumer qualifies for may vary by consumer. Loan proceeds are intended primarily for personal, family and household purposes and small businesses. Minimum loan amounts vary by state, type of loan and purpose. Consumers need to demonstrate ability to repay the loan for refundable loans.</li>
+<li>Based on consumers who received a loan from HFS from February 2019 to May 2021.</li>
+<li>Application processes could take five (5) minutes to complete. Upon completion, a conditional approval may be given pending review of documentation. Funding time is based on the time from final approval following receipt and review of all required documents and signing, prior to 2PM on a business day.</li>
+<li>To exercise the right to rescind, the consumer(s) must notify the HFS in writing by midnight on the third calendar day from obtaining the loan. Within one business day from notice of rescission, the consumer(s) must return any monies received and fees paid on behalf of the consumer(s) by certified funds.</li>
+<li>Lenders recommend and encourage consumers to pay early and often and more in order to avoid additional finance charges.</li>
+<li>If you are using a screen reader and are having problems using this website, please call us for assistance.</li>
+</ol>
+  </div>
+  </section>
+
+  <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static 'js/business-js.js' %}"></script>
+
+
+{% endblock %}

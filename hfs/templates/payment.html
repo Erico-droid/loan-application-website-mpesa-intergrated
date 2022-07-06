@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="{% static 'css/payment.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <div class='container'>
+      <div class='window'>
+        <div class='order-info'>
+          <div class='order-info-content'>
+            <h2>{{queryset.Names}} Loan application</h2>
+                    <div class='line'></div>
+            <table class='order-table'>
+              <tbody>
+                <tr>
+                  <td><img src="{% static 'images/info.png' %}" class='full-width'></img>
+                  </td>
+                  <td style="font-size: 13px">
+                    <br> <span style="font-weight: bold" class='thin'>Loan Info</span>
+                    <p>Name: {{queryset.Names}}</p>
+                    <p>VAT: ksh. {{queryset.ccVAT}}</p>
+                    <p>Excise duty: ksh. {{queryset.ccExciseduty}}</p>
+                    <p>Loan approval fee: ksh. {{queryset.ccregFee}}</p>
+                    <p>total: ksh. {{queryset.ccTotal}}</p>
+                  </td>
+                </tr>
+              </tbody>
+
+            </table>
+
+            <div class='line'></div>
+            <table class='order-table'>
+              <tbody>
+                <tr>
+                  <td><img src="{% static 'images/check.png' %}" class='full-width'></img>
+                  </td>
+                  <td>
+                    <br> <span style="font-weight: bold" class='thin'>Approved</span>
+                    <p style = "font-size: 13px">Your loan of ksh {{queryset.Amount}} has been approved for a period of {{queryset.paymentplan}} with an interest of 1.2% per month and a loan approval fee of {{queryset.ccTotal}}</p>
+                  </td>
+
+                </tr>
+                </tbody>
+            </table>
+    </div>
+    </div>
+    <hr>
+            <div class='credit-info'>
+              <div class='credit-info-content'>
+                <img src="{% static 'images/mpesalogo1.png' %}" height='80' class='credit-card-image' id='credit-card-image'></img>
+                <div class="posts"></div>
+                <form id = "mpesa-form" method="post">
+                  {% csrf_token %}
+                <div class="mpesa-input">
+                  <p>Your M-Pesa Number</p>
+                  <input class='input-field' name="mpesaNumber" id="mpesaNumber"></input>
+                  <button type="submit" class='pay-btn2'>Submit payment</button>
+                </div>
+                </form>
+                <button class='pay-btn'>Proceed to dashboard</button>
+                <a style="text-decoration:none" href="#"><p class="highlight">Why do I need to pay?</p></a>
+              </div>
+
+            </div>
+          </div>
+    </div>
+<script src="{% static 'js/payment.js' %}" charset="utf-8"></script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script type="text/javascript">
+$(document).on('submit', '#mpesa-form', function(e){
+  e.preventDefault()
+  $.ajax({
+      type:'POST',
+      url:'{% url "loanapplication:lipa_na_mpesa" %}',
+      data:{
+          mpesaNumber:$('#mpesaNumber').val(),
+          csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+          action:'ajax-post'
+      },
+      success:function(json){
+          document.getElementById("mpesa-form").reset();
+          $(".posts").prepend('<div class="col-md-12">'+
+              '<div class="alert alert-success" style = "color:green">' +
+                  '<div>' +
+                      '<p class="mb-auto">' + json.message + '</p>' +
+                  '</div>' +
+              '</div>' +
+          '</div>'
+          )
+      },
+      error : function(xhr,errmsg,err) {
+      console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+  }
+  });
+});
+</script>
+  </body>
+</html>
